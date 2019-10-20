@@ -14,8 +14,6 @@ import ElementUI from 'element-ui'
 import router from './router'
 {{/router}}
 
-
-
 // 不使用自定义样式请qing注释下面的内容，并开启默认样式
 import '../theme/index.css'
 // import 'element-ui/lib/theme-chalk/index.css'
