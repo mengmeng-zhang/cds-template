@@ -1,4 +1,4 @@
-import Http from './http';
+import Http from '../http';
 
 export default class DempApi extends Http{
     DempApi(params){
