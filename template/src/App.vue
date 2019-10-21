@@ -11,11 +11,8 @@
 
 <script>
 import Icon from './components/pubilc/icon'
-{{#unless router}}
-{{/unless}}
 export default {
-  name: 'App'{{#router}}{{else}},
-  {{/router}},
+  name: 'App',
   components: {
     Icon
   }
