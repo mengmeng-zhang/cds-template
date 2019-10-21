@@ -1,77 +1,113 @@
-# vue-webpack-boilerplate
+### cds-template
 
-> A full-featured Webpack setup with hot-reload, lint-on-save, unit testing & css extraction.
+> 项目为vue-cli2的模板文件
+>
+> 使用方式和vue-cli一样，模板内部封装好了部分工具
 
-> This template is Vue 2.0 compatible. For Vue 1.x use this command: `vue init webpack#1.0 my-project`
+项目地址： https://github.com/mengmeng-zhang/cds-template
 
+喜欢的请给个star哦
 
-# Vue-cli 3 is here, so this template is now considered deprecated.
+#### 使用方法：
 
-This template was the main template for vue-cli verison 2.*.
+1. 安装vue-cli
 
-Now that we have released a [stable version of vue-cli 3](https://cli.vuejs.org), which incorporates all features that this template offers (and much more), we think that this template doesn't have any significant use for the future, so we won't put much resource in developing it further.
-
-We will try and fix major issues should they arise, but not much more.
-
-Feel free to fork this template if you want to keep it alive.
-
-## Documentation
-
-- [For this template](http://vuejs-templates.github.io/webpack): common questions specific to this template are answered and each part is described in greater detail
-- [For Vue 2.0](http://vuejs.org/guide/): general information about how to work with Vue, not specific to this template
-
-## Usage
-
-This is a project template for [vue-cli](https://github.com/vuejs/vue-cli). **It is recommended to use npm 3+ for a more efficient dependency tree.**
-
-``` bash
-$ npm install -g vue-cli
-$ vue init webpack my-project
-$ cd my-project
-$ npm install
-$ npm run dev
+```bash
+# npm
+npm install -g @vue/cli-init
+# yarn
+yarn global add @vue/cli-init
 ```
 
-This will scaffold the project using the `master` branch. If you wish to use the latest version of the webpack template, do the following instead:
+#### 使用模板
 
-``` bash
-$ vue init webpack#develop my-project
+```
+vue init mengmeng-zhang/cds-template project-name
 ```
 
-:warning: **The develop branch is not considered stable and can contain bugs or not build at all, so use at your own risk.**
+整个流程和vue-cli的流程一样，一路配置下来，项目自动安装对应的包，
+最后同样会出现 cd myapp /  npm run dev
 
-The development server will run on port 8080 by default. If that port is already in use on your machine, the next free port will be used.
 
-## What's Included
+#### 项目目录结构
 
-- `npm run dev`: first-in-class development experience.
-  - Webpack + `vue-loader` for single file Vue components.
-  - State preserving hot-reload
-  - State preserving compilation error overlay
-  - Lint-on-save with ESLint
-  - Source maps
+- build/config目录为项目构建相关目录
+- src 为项目源码存放处
+  - assets 静态文件存放处
+  - components 组件
+  - http 为ajax相关
+  - mixins 混入相关
+  - pages 页面
+  - router 路由
+  - utils  工具相关
+- theme  elementUI 主题
+- element-variables.scss  elementUI 样式修改处
 
-- `npm run build`: Production ready build.
-  - JavaScript minified with [UglifyJS v3](https://github.com/mishoo/UglifyJS2/tree/harmony).
-  - HTML minified with [html-minifier](https://github.com/kangax/html-minifier).
-  - CSS across all components extracted into a single file and minified with [cssnano](https://github.com/ben-eb/cssnano).
-  - Static assets compiled with version hashes for efficient long-term caching, and an auto-generated production `index.html` with proper URLs to these generated assets.
-  - Use `npm run build --report`to build with bundle size analytics.
 
-- `npm run unit`: Unit tests run in [JSDOM](https://github.com/tmpvar/jsdom) with [Jest](https://facebook.github.io/jest/), or in PhantomJS with Karma + Mocha + karma-webpack.
-  - Supports ES2015+ in test files.
-  - Easy mocking.
 
-- `npm run e2e`: End-to-end tests with [Nightwatch](http://nightwatchjs.org/).
-  - Run tests in multiple browsers in parallel.
-  - Works with one command out of the box:
-    - Selenium and chromedriver dependencies automatically handled.
-    - Automatically spawns the Selenium server.
+**模板内部封装了基本的ajax，并在main.js中定义了$api**
 
-### Fork It And Make Your Own
-
-You can fork this repo to create your own boilerplate, and use it with `vue-cli`:
-
-``` bash
-vue init username/repo my-project
+```js
+Vue.prototype.$api = api
 ```
+
+```js
+// 定义接口
+// http/api/index.js中定义接口，当然也可以自定义具体路径
+import Http from './http';
+
+export default class DempApi extends Http{
+    DempApi(params){
+        return this.instance.post(`/`, params);
+    }
+}
+```
+
+```js
+// 定义完毕后在http/api.js中引入刚刚定义的接口
+import DempApi from './api/index'
+
+export default {
+  DempApi: new DempApi()
+}
+```
+
+```js
+// ajax使用
+this.$api.DempApi.DempApi(params).then(...)
+```
+
+具体ajax配置请自行下载模板查看
+
+**utils目录中定义了基本的工具**
+
+- config.js     # 公共变量
+- eventVue.js    # bus vue
+- index.js     # 工具集
+- loading.js     #加载的模态层
+- storage.js     # localStorage/sessionStorage 封装
+
+**assets目录为静态文件目录**
+
+- css     样式文件
+
+  - common.scss    # 公共样式
+  - func      #scss 公共方法
+  - minix.scss    # scss混合宏
+  - reset.scss   # 样式初始化
+  - var.scss    # scss变量
+
+- svg   存放svg图标，配合components目录下的icon组件一起使用
+
+  - 使用方法
+
+  - ```vue
+    // 引入
+    import Icon from './components/pubilc/icon'   // 引入路径参照自己的项目
+    // 使用
+    <Icon name="logo" :style="{width: '54px', height: '22px'}" />
+    // name: svg的名称
+    // style： 样式， 默认为width: 20px; height: 20px
+    ```
+
+模板默认使用scss编写css， 并且初始化时安装好了node-sass和sass-loader，并默认安装了elementUI，对于个性化定制elementUI样式的，可以在目录中找到theme文件夹和element-variables.scss自行修改定义样式
