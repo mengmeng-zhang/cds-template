@@ -61,6 +61,7 @@
     {{/if_eq}}
     {{#if_eq runner "karma"}}
     "cross-env": "^5.0.1",
+    "element-theme-chalk": "^2.12.0",
     "karma": "^1.4.1",
     "karma-coverage": "^1.1.1",
     "karma-mocha": "^1.3.0",
